@@ -1,0 +1,9 @@
+---
+:sources:
+  mane:
+    :deps:
+      iostream: stdlib
+      math: mixin
+    sample: default
+:scr: default.sh
+...
