@@ -1,11 +1,15 @@
-require './engine.rb'
+require_relative './engine.rb'
 require 'thor'
 
 
 class Cxxraft < Thor
   desc "start", "start new proj"
   method_options :silent => :boolean
-  def start
+  def start(name = "")
+    unless name.empty?
+      Dir.mkdir name
+      $curdir = name
+    end
     unless @config = find_config
       @config = File.join $curdir, "cxxraft.yml"
       if options.silent?
@@ -72,4 +76,4 @@ def find_config
   return nil
 end
 
-Cxxraft.start
+#Cxxraft.start

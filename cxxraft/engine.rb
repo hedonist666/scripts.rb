@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require "./sourcefile.rb"
+require_relative "./sourcefile.rb"
 require 'yaml'
 require 'fileutils'
 
@@ -16,7 +16,7 @@ def load_parse(fname)
     $sources << (Source.new s)
   end
   unless File.exists? File.join $curdir, "/scr.sh"
-    FIleUilts.copy_file (File.join HOMEDIR, "scrs", y[:scr]), 
+    FileUtils.copy_file (File.join HOMEDIR, "scrs", y[:scr]), 
       (File.join $curdir, "scr.sh")
   end
 end
