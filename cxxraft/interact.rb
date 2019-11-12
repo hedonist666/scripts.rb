@@ -1,6 +1,12 @@
 require_relative './engine.rb'
 require 'thor'
 
+$prompt = ">>>"
+
+def gets
+  print $prompt
+  STDIN.gets
+end
 
 class Cxxraft < Thor
   desc "start", "start new proj"
@@ -18,7 +24,7 @@ class Cxxraft < Thor
         y = {}
         puts "hi, to proceed you should answer to few questions"
         puts "which scr.sh you want to use? (enter to default.sh)"
-        y[:scr] = unless (a = STDIN.gets.chomp).empty?
+        y[:scr] = unless (a = gets.chomp).empty?
                     a
                   else
                     "default.sh"
@@ -26,7 +32,7 @@ class Cxxraft < Thor
         abort "dunno what're u talking 'bout" unless File.exists? (File.join HOMEDIR,
                                                                    "scrs", y[:scr])
         puts "how mane source files? (enter to 1)"
-        i = unless (a = STDIN.gets.chomp).empty?
+        i = unless (a = gets.chomp).empty?
               a.to_i
             else
               1
@@ -35,24 +41,24 @@ class Cxxraft < Thor
         y[:sources] = {}
         i.times do 
           puts "enter name:"
-          abort "I asked one simple qustion" if (name = STDIN.gets.chomp).empty?
-          y[:sources][name]       = {}
-          y[:sources][name][:deps] = {}
+          abort "I asked one simple qustion" if (name = gets.chomp).empty?
+          y[:sources][name]          = {}
+          y[:sources][name][:deps]   = {}
           puts "enter sample for #{name} (enter to default)"
-          y[:sources][name][:sample] = unless (sample = STDIN.gets.chomp).empty?
+          y[:sources][name][:sample] = unless (sample = gets.chomp).empty?
                                          sample
                                        else
                                          "default"
                                        end
           puts "enter deps with format 'lib:source'\\n...\\nend (enter to standart)"
           deps = {}
-          input = STDIN.gets.chomp
+          input = gets.chomp
           if input.empty?
             deps = {"standart" => "mixin"}
           else
             while not input.include? "end"
               deps[input.split(':')[0]] = input.split(':')[1]
-              input = STDIN.gets.chomp
+              input = gets.chomp
             end
           end
           y[:sources][name][:deps] = deps
