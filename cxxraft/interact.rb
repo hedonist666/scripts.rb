@@ -30,7 +30,7 @@ class Cxxraft < Thor
                   else
                     "default.sh"
                   end
-        abort "dunno what're u talking 'bout" unless File.exists? (File.join HOMEDIR,
+        abort "[error]: dunno what're u talking 'bout" unless File.exists? (File.join HOMEDIR,
                                                                    "scrs", y[:scr])
         puts "how mane source files? (enter to 1)"
         i = unless (a = gets.chomp).empty?
@@ -38,11 +38,11 @@ class Cxxraft < Thor
             else
               1
             end
-        abort "code without files?" unless i > 0
+        abort "[error]: code without files?" unless i >= 0
         y[:sources] = {}
         i.times do 
           puts "enter name:"
-          abort "I asked one simple qustion" if (name = gets.chomp).empty?
+          abort "[error]: I asked one simple qustion" if (name = gets.chomp).empty?
           y[:sources][name]          = {}
           y[:sources][name][:deps]   = {}
           puts "enter sample for #{name} (enter to default)"
@@ -67,8 +67,9 @@ class Cxxraft < Thor
           puts y
 
           #end of dialog
-          File.write @config, y.to_yaml
         end
+
+        File.write @config, y.to_yaml
       end
 
 
@@ -80,13 +81,13 @@ class Cxxraft < Thor
 
   desc "add", "add source file to proj\n (NAME to do it interactivly ot NAME:TAG)"
   def add(sfn)
-    abort "no project here" unless @config = find_config
+    abort "[error]: no project here" unless @config = find_config
     name = ""
     tag = {}
     if sfn.include? ':'
       name, tag = sfn.split(':')
       fn = File.join HOMEDIR, "tags", "#{tag}.yml"
-      abort "no tagfile with name #{tag}" unless File.exists? fn
+      abort "[error]: no tagfile with name #{tag}" unless File.exists? fn
       h = YAML.load File.read fn
     else
       puts "enter sample for #{name} (enter to default)"

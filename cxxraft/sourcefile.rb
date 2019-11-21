@@ -13,7 +13,7 @@ class Source
       @content = ""
       
       sample = File.read (File.join HOMEDIR, "samples", h[:sample])
-      _inc = ("\n"*1) + @includes + ("\n"*3)
+      _inc = ("\n"*0) + @includes + ("\n"*3)
       sample.lines.each do |line|
         if line.include? "#"
           @content << line
@@ -51,7 +51,7 @@ class Source
         end
 
         @includes << "#include \"libs/#{header_file}\"\n" 
-      else abort "unknown deps"
+      else abort "[error]: unknown deps"
       end
     end
   end

@@ -28,7 +28,7 @@ def add_source(fname, h)
   puts "[internals]: adding source #{h[:name]} with config #{fname}"
   y = YAML.load File.read fname
   y[:sources] = {} unless y[:sources]
-  abort "source file already exists" if y[:sources].include? h[:name]
+  abort "[error]: source file already exists" if y[:sources].include? h[:name]
   $sources << (Source.new h)
   name = h[:name]
   h.delete :name
