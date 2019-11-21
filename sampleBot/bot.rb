@@ -8,7 +8,7 @@ $fname=File.join HOMEDIR, 'dos.xml'
 $lit_file=File.join HOMEDIR, 'lit.txt'
 ss={}
 
-welcome_message="Здарова, чтобы начать тест, отправьте запрос /test,
+welcome_message="чтобы начать тест, отправьте запрос /test,
 чтобы ознакомиться со списком, отправьте запрос /read"
 
 def message(bot,id,t)
