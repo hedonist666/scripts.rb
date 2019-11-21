@@ -1,0 +1,14 @@
+<root>  
+    <question name="какой Magic number у ELF файла?" ans="\x7F\x45\x4C\x46">
+    <opt>\x14\x88</opt>
+    <opt>\x7F\x32\x55\xFF</opt>
+    <opt>\x7F\x45\x4C\x46</opt>
+    <opt>\x97\x34</opt>
+  </question>
+  <question name="что такое SQL инъекция" ans="Внедрение SQL запросов с клиентской части">
+    <opt>Внедрение SQL запросов с клиентской части</opt>
+    <opt>Внедрение в веб-систему вредоносного кода</opt>
+    <opt>Межайтовая подделка запроса</opt>
+    <opt>Перехват SQL запросов по сети</opt>
+  </question>
+</root>
