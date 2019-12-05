@@ -2,7 +2,7 @@
 
 
 
-require 'r2pipe'
+require_relative './r2pipe.rb'
 require 'json'
 
 
