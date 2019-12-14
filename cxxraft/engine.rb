@@ -18,10 +18,16 @@ def load_parse(fname, y = nil)
     end
   end
   unless File.exists? File.join $curdir, "/scr.sh"
-    puts "creating scr.sh..."
-    FileUtils.copy_file (File.join HOMEDIR, "scrs", y[:scr]), 
-      (File.join $curdir, "scr.sh")
+    scrsh y
   end
+  return nil
+end
+
+def scrsh(y)
+  puts "creating scr.sh..."
+  FileUtils.copy_file (File.join HOMEDIR, "scrs", y[:scr]), 
+    (File.join $curdir, "scr.sh")
+  return y[:scr]
 end
 
 def add_source(fname, h)

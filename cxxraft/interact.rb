@@ -9,7 +9,7 @@ def gets
 end
 
 class Cxxraft < Thor
-  desc "start", "start new proj"
+  desc "start NAME", "start new proj"
   method_options :silent => :boolean
   def start(name = "")
     unless name.empty?
@@ -79,7 +79,7 @@ class Cxxraft < Thor
 
   end
 
-  desc "add", "add source file to proj\n (NAME to do it interactivly ot NAME:TAG)"
+  desc "add SOURCE", "add source file to proj\n (NAME to do it interactivly ot NAME:TAG)"
   def add(sfn)
     abort "[error]: no project here" unless @config = find_config
     name = ""
@@ -112,6 +112,18 @@ class Cxxraft < Thor
     h[:name] = name
     add_source(@config, h)
   end
+
+  desc "scr SCR.SH", "change scr.sh file, see $ cxxraft.rb list scrs; for samples"
+  def scr(fn)
+    abort "no proj here" unless @config = find_config    
+    path = File.join HOMEDIR, "scrs", fn
+    abort "there's no such scr" unless File.exists? path
+    @y = YAML.load File.read @config
+    FileUtils.copy_file path, (File.join $curdir, "scr.sh")
+    @y[:scr] = fn
+    File.write @config, @y.to_yaml
+  end
+
 end
 
 def find_config
