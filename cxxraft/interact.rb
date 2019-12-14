@@ -124,6 +124,22 @@ class Cxxraft < Thor
     File.write @config, @y.to_yaml
   end
 
+  desc "list dir", "show what we've got"
+  def list(what)
+    desc = {}
+
+    path = File.join HOMEDIR, what
+    if File.exists? (File.join path, "description")
+      desc = YAML.load File.read (File.join path, "description")
+    end
+
+    Dir.new(path).children.each_with_index do |e, i|
+      next if e == "description"   
+      str = "[#{i}]: #{e}"
+      str << desc[e] unless desc[e].nil?
+      puts str
+    end
+  end
 end
 
 def find_config
