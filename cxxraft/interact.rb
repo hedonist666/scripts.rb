@@ -118,6 +118,7 @@ class Cxxraft < Thor
     abort "no proj here" unless @config = find_config    
     path = File.join HOMEDIR, "scrs", fn
     abort "there's no such scr" unless File.exists? path
+    puts "switching scr.sh to #{fn}...."
     @y = YAML.load File.read @config
     FileUtils.copy_file path, (File.join $curdir, "scr.sh")
     @y[:scr] = fn
@@ -129,15 +130,30 @@ class Cxxraft < Thor
     desc = {}
 
     path = File.join HOMEDIR, what
-    if File.exists? (File.join path, "description")
-      desc = YAML.load File.read (File.join path, "description")
+    if File.exists? (File.join path, "description.yml")
+      desc = YAML.load File.read (File.join path, "description.yml")
     end
 
     Dir.new(path).children.each_with_index do |e, i|
-      next if e == "description"   
+      next if e == "description.yml"   
       str = "[#{i}]: #{e}"
-      str << desc[e] unless desc[e].nil?
+      str << ", " << desc[e] unless desc[e].nil?
       puts str
+    end
+  end
+  
+  desc "source NAME ACTION ...", "action with source file, source HELP ACTION_NAME to see help :)"
+  def source(name, act, *args)
+    case act
+    when "rename"
+      unless name == "help"
+        abort "no proj here" unless @config = find_config
+        rename @config, name, args[0]
+      else
+        puts "rename NEW_NAME, renames source file"
+      end
+    else
+      abort "unknown command"
     end
   end
 end

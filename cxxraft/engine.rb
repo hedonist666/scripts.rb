@@ -42,4 +42,16 @@ def add_source(fname, h)
   File.write fname, y.to_yaml 
 end
 
+def rename(fname, old, new)
+  y = YAML.load File.read fname
+  abort "[error]: no such file here"            unless File.exists? File.join $curdir, fname
+  abort "[error]: no such sourcefile in config" unless y[:sources][old]
+  puts "[internals]: renaming source #{old} to #{new}"
+  File.rename (File.join $curdir, old), (File.join $curdir, new)
+  h = y[:sources][old]
+  y[:sources][new] = h
+  y[:sources].delete old
+  File.write fname, y.to_yaml
+end
+
 #binding.irb

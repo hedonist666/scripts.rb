@@ -3,7 +3,7 @@ class Source
   def initialize(h)
     @name = h[:name] 
     add_deps h[:deps]
-    h[:name] = "#{h[:name]}.cxx" unless h[:name] =~ /.*\.cxx/
+#    h[:name] = "#{h[:name]}.cxx" unless h[:name] =~ /.*\.cxx/
     fpath = File.join $curdir, h[:name]
     unless File.exists? fpath
       puts "[internals]: creating file #{h[:name]}.."
