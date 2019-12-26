@@ -141,16 +141,31 @@ class Cxxraft < Thor
       puts str
     end
   end
+
+  desc "s NAME ACTION", "shortcut for source"
+  def s(name, act, *args)
+    source(name, act, *args)
+  end
   
   desc "source NAME ACTION ...", "action with source file, source HELP ACTION_NAME to see help :)"
   def source(name, act, *args)
+    abort "[error]: no proj here" unless @config = find_config
     case act
+    when "help"
+      puts "commands:"
+      puts "  rename"
+      puts "  add_deps"
     when "rename"
       unless name == "help"
-        abort "no proj here" unless @config = find_config
         rename @config, name, args[0]
       else
-        puts "rename NEW_NAME, renames source file"
+        puts "rename NEW_NAME; renames source file"
+      end
+    when "add"
+      unless name == "help"
+        add @config, name, args
+      else
+        puts "add dep1, dep2, ...; add dependencies to sourcefile"
       end
     else
       abort "unknown command"

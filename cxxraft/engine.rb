@@ -4,7 +4,8 @@ require_relative "./sourcefile.rb"
 require 'yaml'
 require 'fileutils'
 
-HOMEDIR = File.join Dir.home, ".cxxraft"
+#HOMEDIR = File.join Dir.home, ".cxxraft"
+HOMEDIR = File.join __dir__, "materials"
 $curdir = Dir.new "."
 $sources = []
 
@@ -51,6 +52,21 @@ def rename(fname, old, new)
   h = y[:sources][old]
   y[:sources][new] = h
   y[:sources].delete old
+  File.write fname, y.to_yaml
+end
+
+def add(fname, name, *args)
+  deps = args
+  y = YAML.load File.read fname
+  abort "[error]: no sourcefile with name #{name}" unless y[:sources][name].nil?
+  h = y[:sources][name]
+  h[:name] = name
+  s = Source.new h
+  s.add_deps deps
+  s.flush_deps(s.f.read)
+  h[:deps].merge! deps
+  h.delete :name
+  y[:sources][name] = h
   File.write fname, y.to_yaml
 end
 

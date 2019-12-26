@@ -1,0 +1,3 @@
+default.sh: compile and run file
+make.sh: make and run file
+gdb_valgrind.sh: comile and run with gdb and valgrind

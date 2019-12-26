@@ -1,0 +1,6 @@
+---
+:deps:
+  standart: mixin
+  math: mixin
+:sample: default
+...

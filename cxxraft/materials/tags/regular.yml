@@ -1,0 +1,8 @@
+---
+:deps:
+  standart: mixin
+  filesystem: stdlib
+  fstream: stdlib
+  stdexcept: stdlib
+:sample: default
+...

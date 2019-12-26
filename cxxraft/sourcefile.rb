@@ -1,39 +1,43 @@
 class Source
   
+  attr_accessor :f
+
   def initialize(h)
     @name = h[:name] 
+    @includes = ''
     add_deps h[:deps]
-#    h[:name] = "#{h[:name]}.cxx" unless h[:name] =~ /.*\.cxx/
+    #h[:name] = "#{h[:name]}.cxx" unless h[:name] =~ /.*\.cxx/
     fpath = File.join $curdir, h[:name]
     unless File.exists? fpath
       puts "[internals]: creating file #{h[:name]}.."
-      @f = File.new fpath, "w"
-      
-
-      @content = ""
-      
+      @f = File.new fpath, "rw"
       sample = File.read (File.join HOMEDIR, "samples", h[:sample])
-      _inc = ("\n"*0) + @includes + ("\n"*3)
-      sample.lines.each do |line|
-        if line.include? "#"
-          @content << line
-        else
-          @content << _inc
-          _inc = ""
-          @content << line
-        end
-      end
-
-      @f.write @content
-
+      flush_deps sample
     else
       puts "[internals]: file #{h[:name]} already exists, opened for reading.."
-      @f = File.open fpath, "r"
+      @f = File.open fpath, "rw"
     end
 
   end
+
+  def flush_deps(txt)
+    @content = ""
+    _inc = ("\n"*0) + @includes + ("\n"*3)
+    txt.lines.each do |line|
+      if line.include? "#"
+        @content << line
+      else
+        @content << _inc
+        _inc = ""
+        @content << line
+      end
+    end
+
+    @f.write @content
+  end
+
   def add_deps(h)
-    @includes = ''
+    puts "[internals]: adding #{h.length} dependencies to file #{@name}"
     h.each do |lib, src|
       case src
       when "stdlib"
@@ -55,4 +59,5 @@ class Source
       end
     end
   end
+
 end

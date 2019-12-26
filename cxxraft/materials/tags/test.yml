@@ -1,0 +1,6 @@
+---
+:deps:
+  catch: local
+  standart: mixin
+:sample: test
+...
