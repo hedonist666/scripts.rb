@@ -10,12 +10,12 @@ class Source
     fpath = File.join $curdir, h[:name]
     unless File.exists? fpath
       puts "[internals]: creating file #{h[:name]}.."
-      @f = File.new fpath, "rw"
+      @f = File.new fpath, 'w'
       sample = File.read (File.join HOMEDIR, "samples", h[:sample])
       flush_deps sample
     else
       puts "[internals]: file #{h[:name]} already exists, opened for reading.."
-      @f = File.open fpath, "rw"
+      @f = File.open fpath
     end
 
   end

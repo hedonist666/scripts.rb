@@ -171,6 +171,13 @@ class Cxxraft < Thor
       abort "unknown command"
     end
   end
+
+  def cmd()
+    load_parse
+    $sourcefiles.each do |sf|
+      
+    end 
+  end
 end
 
 def find_config
